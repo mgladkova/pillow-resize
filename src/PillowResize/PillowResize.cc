@@ -292,10 +292,10 @@ cv::Mat PillowResize::_nearestResample(const cv::Mat& im_in,
 
     /**
      * \brief affineTransform Transform a point according to the given transformation.
-     * 
+     *
      * \param[in] p Point that has to be transformed.
      * \param[in] a 2×3 transformation matrix.
-     * 
+     *
      * \return Transformed point.
      */
     auto affineTransform = [](const cv::Point& p,
@@ -315,12 +315,12 @@ cv::Mat PillowResize::_nearestResample(const cv::Mat& im_in,
      * Copy a input pixel into the given output matrix position.
      * The copy is performed copying a continuous number of bytes (pixel_size)
      * from input matrix to output matrix.
-     * 
+     *
      * \param[in] im_in Input matrix.
      * \param[out] im_out Output matrix.
      * \param[in] p_in Input point coordinates.
      * \param[in] p_out Output point coordinates.
-     * \param[in] pixel_size Size of the pixel in bytes. 
+     * \param[in] pixel_size Size of the pixel in bytes.
      */
     auto nearestInterpolation =
         [](const cv::Mat& im_in, cv::Mat& im_out, const cv::Point2d& p_in,
@@ -357,6 +357,9 @@ cv::Mat PillowResize::_nearestResample(const cv::Mat& im_in,
             break;
         case CV_32F:
             pixel_size = sizeof(float);
+            break;
+        case CV_64F:
+            pixel_size = sizeof(double);
             break;
         default:
             throw std::runtime_error("Pixel type not supported");
@@ -486,6 +489,9 @@ void PillowResize::_resampleHorizontal(cv::Mat& im_out,
                                             _roundUp<int>);
         case CV_32F:
             return _resampleHorizontal<float>(im_out, im_in, offset, ksize,
+                                              bounds, prekk);
+        case CV_64F:
+            return _resampleHorizontal<double>(im_out, im_in, offset, ksize,
                                               bounds, prekk);
         default:
             throw std::runtime_error("Pixel type not supported");
