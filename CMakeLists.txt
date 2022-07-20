@@ -18,6 +18,8 @@ if(NOT EXISTS ${CMAKE_BINARY_DIR}/CMakeCache.txt)
 
 endif()
 
+set(CMAKE_CXX_STANDARD 17)
+
 # (un)set: cmake -DCVV_DEBUG_MODE=OFF ..
 option(CVV_DEBUG_MODE "cvvisual-debug-mode" OFF)
 if(CVV_DEBUG_MODE MATCHES ON)
